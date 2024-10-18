@@ -139,6 +139,8 @@ class TaskImplementation(TaskSpec):
     task_id: str = dataclasses.field(init=False)
     dynamic_inputs: Dict[str, Any] = dataclasses.field(default_factory=dict)
     run_id: str = dataclasses.field(default_factory=str)
+    task_index: Optional[int] = None
+    tasks_in_group: Optional[int] = None
 
     def bind(self, dynamic_inputs: Dict[str, Any]) -> "TaskImplementation":
         """Binds dynamic inputs to the task spec, returning a new task spec"""

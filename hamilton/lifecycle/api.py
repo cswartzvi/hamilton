@@ -15,7 +15,10 @@ from hamilton import graph_types, node
 # To really fix this we should move everything user-facing out of base, which is a pretty sloppy name for a package anyway
 # And put it where it belongs. For now we're OK with the TYPE_CHECKING hack
 if TYPE_CHECKING:
+    from hamilton.execution.grouping import TaskSpec
     from hamilton.graph import FunctionGraph
+else:
+    TaskSpec = None
 
 from hamilton.graph_types import HamiltonGraph, HamiltonNode
 from hamilton.lifecycle.base import (
@@ -27,6 +30,7 @@ from hamilton.lifecycle.base import (
     BasePostGraphExecute,
     BasePostNodeExecute,
     BasePostTaskExecute,
+    BasePostTaskGroup,
     BasePreGraphExecute,
     BasePreNodeExecute,
     BasePreTaskExecute,
@@ -379,6 +383,8 @@ class TaskExecutionHook(BasePreTaskExecute, BasePostTaskExecute, abc.ABC):
         nodes: List["node.Node"],
         inputs: Dict[str, Any],
         overrides: Dict[str, Any],
+        task_index: Optional[int],
+        tasks_in_group: Optional[int],
     ):
         self.run_before_task_execution(
             run_id=run_id,
@@ -386,6 +392,8 @@ class TaskExecutionHook(BasePreTaskExecute, BasePostTaskExecute, abc.ABC):
             nodes=[HamiltonNode.from_node(n) for n in nodes],
             inputs=inputs,
             overrides=overrides,
+            task_index=task_index,
+            tasks_in_group=tasks_in_group,
         )
 
     def post_task_execute(
@@ -416,6 +424,8 @@ class TaskExecutionHook(BasePreTaskExecute, BasePostTaskExecute, abc.ABC):
         nodes: List[HamiltonNode],
         inputs: Dict[str, Any],
         overrides: Dict[str, Any],
+        task_index: Optional[int],
+        tasks_in_group: Optional[int],
         **future_kwargs,
     ):
         """Implement this to run something after task execution. Tasks are tols used to group nodes.
@@ -452,6 +462,25 @@ class TaskExecutionHook(BasePreTaskExecute, BasePostTaskExecute, abc.ABC):
         :param success: Whether the task was successful
         :param error: The error the task threw, if any
         :param future_kwargs: Reserved for backwards compatibility.
+        """
+        pass
+
+
+class TaskGroupingHook(BasePostTaskGroup):
+
+    @override
+    @final
+    def post_task_group(self, *, run_id: str, tasks: List[TaskSpec]):
+        return self.run_after_task_grouping(run_id=run_id, tasks=tasks)
+
+
+    @abc.abstractmethod
+    def run_after_task_grouping(self, *, run_id: str, tasks: List[TaskSpec], **future_kwargs):
+        """Hook that is called after task grouping. This is useful for logging, etc...
+
+        :param run_id: ID of the run, unique in scope of the driver.
+        :param tasks: List of tasks that were grouped together.
+        :param future_kwargs: Additional keyword arguments -- this is kept for backwards compatibility.
         """
         pass
 

@@ -108,6 +108,8 @@ def base_execute_task(task: TaskImplementation) -> Dict[str, Any]:
             nodes=task.nodes,
             inputs=task.dynamic_inputs,
             overrides=task.overrides,
+            task_index=task.task_index,
+            tasks_in_group=task.tasks_in_group,
         )
     error = None
     success = True
