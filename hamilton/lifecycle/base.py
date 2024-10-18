@@ -43,6 +43,9 @@ from hamilton import htypes
 # python, which (our usage of) leans type-hinting trigger-happy, this will suffice.
 if TYPE_CHECKING:
     from hamilton import graph, node
+    from hamilton.execution.grouping import TaskSpec
+else:
+    TaskSpec = None
 
 # All of these are internal APIs. Specifically, structure required to manage a set of
 # hooks/methods/validators that we will likely expand. We store them in constants (rather than, say, a more complex single object)
@@ -418,6 +421,8 @@ class BasePreTaskExecute(abc.ABC):
         nodes: List["node.Node"],
         inputs: Dict[str, Any],
         overrides: Dict[str, Any],
+        task_index: Optional[int],
+        tasks_in_group: Optional[int],
     ):
         """Hook that is called immediately prior to task execution. Note that this is only useful in dynamic
         execution, although we reserve the right to add this back into the standard hamilton execution pattern.
@@ -442,6 +447,9 @@ class BasePreTaskExecuteAsync(abc.ABC):
         nodes: List["node.Node"],
         inputs: Dict[str, Any],
         overrides: Dict[str, Any],
+        task_index: Optional[int],
+        tasks_in_group: Optional[int],
+
     ):
         """Hook that is called immediately prior to task execution. Note that this is only useful in dynamic
         execution, although we reserve the right to add this back into the standard hamilton execution pattern.
@@ -612,6 +620,13 @@ class BasePostNodeExecuteAsync(abc.ABC):
         :param result: The result of the node execution, if no error was raised
         :param task_id: ID of the task, defaults to None if not in a task-based execution
         """
+        pass
+
+
+@lifecycle.base_hook("post_task_group")
+class BasePostTaskGroup(abc.ABC):
+    @abc.abstractmethod
+    def post_task_group(self, *, run_id: str, tasks: List[TaskSpec]):
         pass
 
 

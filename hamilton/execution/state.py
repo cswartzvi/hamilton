@@ -197,6 +197,8 @@ class ExecutionState:
         group_id: Optional[str],
         dependencies: Dict[str, List[str]] = None,
         bind: Dict[str, Any] = None,
+        task_index: Optional[int] = None,
+        tasks_in_group: Optional[int] = None,
     ):
         """Creates a task and enqueues it to the internal queue. This takes a task in "Plan" state
         (E.G. a TaskSpec), and trasnforms it into execution-ready state, freezing the dependencies.
@@ -228,6 +230,8 @@ class ExecutionState:
             # This just assigns the realized dependencies to be the base dependencies
             realized_dependencies=realized_dependencies,
             run_id=self.run_id,
+            task_index=task_index,
+            tasks_in_group=tasks_in_group,
         )
         if bind is not None:
             task_implementation = task_implementation.bind(bind)
@@ -267,6 +271,8 @@ class ExecutionState:
         # results_to_bind = list(result_cache.read([expander_node.name]))
         # For every result in the list, we create a new set of tasks
         name_maps = {}
+        task_index = 0
+        tasks_in_group = len(parameterizations.items()) * len(tasks_to_repeat)
         # Go through every task we need to repeat
         for group_name, result in parameterizations.items():
             new_tasks = []
@@ -275,12 +281,18 @@ class ExecutionState:
             for task in tasks_to_repeat:
                 # We create a new task, with the result bound to the input
                 new_task = self.realize_task(
-                    task, spawning_task_id, group_name, bind={input_to_parameterize: result}
+                    task,
+                    spawning_task_id,
+                    group_name,
+                    bind={input_to_parameterize: result},
+                    task_index=task_index,
+                    tasks_in_group=tasks_in_group,
                 )
                 # new_task = new_task.bind({expander_node.name: result})
                 # should bind...
                 name_map[task.base_id] = new_task.task_id
                 new_tasks.append(new_task)
+                task_index += 1
             for new_task in new_tasks:
                 # We replace the dependencies with the new task ids
                 new_task.realized_dependencies = {
