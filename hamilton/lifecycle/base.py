@@ -44,8 +44,10 @@ from hamilton import htypes
 if TYPE_CHECKING:
     from hamilton import graph, node
     from hamilton.execution.grouping import TaskSpec
+    from hamilton.execution.grouping import NodeGroupPurpose
 else:
     TaskSpec = None
+    NodeGroupPurpose = None
 
 # All of these are internal APIs. Specifically, structure required to manage a set of
 # hooks/methods/validators that we will likely expand. We store them in constants (rather than, say, a more complex single object)
@@ -423,6 +425,8 @@ class BasePreTaskExecute(abc.ABC):
         overrides: Dict[str, Any],
         task_index: Optional[int],
         tasks_in_group: Optional[int],
+        spawning_task_id: Optional[str],
+        purpose: NodeGroupPurpose,
     ):
         """Hook that is called immediately prior to task execution. Note that this is only useful in dynamic
         execution, although we reserve the right to add this back into the standard hamilton execution pattern.
@@ -449,7 +453,7 @@ class BasePreTaskExecuteAsync(abc.ABC):
         overrides: Dict[str, Any],
         task_index: Optional[int],
         tasks_in_group: Optional[int],
-
+        spawning_task_id: Optional[str],
     ):
         """Hook that is called immediately prior to task execution. Note that this is only useful in dynamic
         execution, although we reserve the right to add this back into the standard hamilton execution pattern.
@@ -642,6 +646,8 @@ class BasePostTaskExecute(abc.ABC):
         results: Optional[Dict[str, Any]],
         success: bool,
         error: Exception,
+        spawning_task_id: Optional[str],
+        purpose: NodeGroupPurpose,
     ):
         """Hook called immediately after task execution. Note that this is only useful in dynamic
         execution, although we reserve the right to add this back into the standard hamilton execution pattern.
@@ -668,6 +674,7 @@ class BasePostTaskExecuteAsync(abc.ABC):
         results: Optional[Dict[str, Any]],
         success: bool,
         error: Exception,
+        spawning_task_id: Optional[str],
     ):
         """Asynchronous Hook called immediately after task execution. Note that this is only useful in dynamic
         execution, although we reserve the right to add this back into the standard hamilton execution pattern.

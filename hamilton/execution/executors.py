@@ -110,6 +110,8 @@ def base_execute_task(task: TaskImplementation) -> Dict[str, Any]:
             overrides=task.overrides,
             task_index=task.task_index,
             tasks_in_group=task.tasks_in_group,
+            spawning_task_id=task.spawning_task_id,
+            purpose=task.purpose,
         )
     error = None
     success = True
@@ -141,6 +143,8 @@ def base_execute_task(task: TaskImplementation) -> Dict[str, Any]:
                 results=results,
                 success=success,
                 error=error,
+                spawning_task_id=task.spawning_task_id,
+                purpose=task.purpose,
             )
     # This selection is for GC
     # We also need to get the override values
