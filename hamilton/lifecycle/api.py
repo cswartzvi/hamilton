@@ -15,9 +15,10 @@ from hamilton import graph_types, node
 # To really fix this we should move everything user-facing out of base, which is a pretty sloppy name for a package anyway
 # And put it where it belongs. For now we're OK with the TYPE_CHECKING hack
 if TYPE_CHECKING:
-    from hamilton.execution.grouping import TaskSpec
+    from hamilton.execution.grouping import NodeGroupPurpose, TaskSpec
     from hamilton.graph import FunctionGraph
 else:
+    NodeGroupPurpose = None
     TaskSpec = None
 
 from hamilton.graph_types import HamiltonGraph, HamiltonNode
@@ -385,6 +386,8 @@ class TaskExecutionHook(BasePreTaskExecute, BasePostTaskExecute, abc.ABC):
         overrides: Dict[str, Any],
         task_index: Optional[int],
         tasks_in_group: Optional[int],
+        spawning_task_id: Optional[str],
+        purpose: NodeGroupPurpose,
     ):
         self.run_before_task_execution(
             run_id=run_id,
@@ -394,6 +397,8 @@ class TaskExecutionHook(BasePreTaskExecute, BasePostTaskExecute, abc.ABC):
             overrides=overrides,
             task_index=task_index,
             tasks_in_group=tasks_in_group,
+            spawning_task_id=spawning_task_id,
+            purpose=purpose,
         )
 
     def post_task_execute(
@@ -405,6 +410,8 @@ class TaskExecutionHook(BasePreTaskExecute, BasePostTaskExecute, abc.ABC):
         results: Optional[Dict[str, Any]],
         success: bool,
         error: Exception,
+        spawning_task_id: Optional[str],
+        purpose: NodeGroupPurpose,
     ):
         self.run_after_task_execution(
             run_id=run_id,
@@ -413,6 +420,8 @@ class TaskExecutionHook(BasePreTaskExecute, BasePostTaskExecute, abc.ABC):
             results=results,
             success=success,
             error=error,
+            spawning_task_id=spawning_task_id,
+            purpose=purpose,
         )
 
     @abc.abstractmethod
