@@ -31,6 +31,7 @@ from hamilton.lifecycle.base import (
     BasePostGraphExecute,
     BasePostNodeExecute,
     BasePostTaskExecute,
+    BasePostTaskExpand,
     BasePostTaskGroup,
     BasePreGraphExecute,
     BasePreNodeExecute,
@@ -475,13 +476,21 @@ class TaskExecutionHook(BasePreTaskExecute, BasePostTaskExecute, abc.ABC):
         pass
 
 
-class TaskGroupingHook(BasePostTaskGroup):
+class TaskGroupingHook(BasePostTaskGroup, BasePostTaskExpand):
 
     @override
     @final
     def post_task_group(self, *, run_id: str, tasks: List[TaskSpec]):
         return self.run_after_task_grouping(run_id=run_id, tasks=tasks)
 
+    @override
+    @final
+    def post_task_expand(
+        self, *, run_id: str, task_id: str, parameters: Dict[str, Any]
+    ):
+        return self.run_after_task_expansion(
+            run_id=run_id, task_id=task_id, parameters=parameters
+        )
 
     @abc.abstractmethod
     def run_after_task_grouping(self, *, run_id: str, tasks: List[TaskSpec], **future_kwargs):
@@ -489,6 +498,19 @@ class TaskGroupingHook(BasePostTaskGroup):
 
         :param run_id: ID of the run, unique in scope of the driver.
         :param tasks: List of tasks that were grouped together.
+        :param future_kwargs: Additional keyword arguments -- this is kept for backwards compatibility.
+        """
+        pass
+
+    @abc.abstractmethod
+    def run_after_task_expansion(
+        self, *, run_id: str, task_id: str, parameters: Dict[str, Any], **future_kwargs
+    ):
+        """Hook that is called after task expansion. This is useful for logging, etc...
+
+        :param run_id: ID of the run, unique in scope of the driver.
+        :param task_id: ID of the task that was expanded.
+        :param parameters: Parameters that were passed to the task.
         :param future_kwargs: Additional keyword arguments -- this is kept for backwards compatibility.
         """
         pass

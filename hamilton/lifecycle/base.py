@@ -634,6 +634,15 @@ class BasePostTaskGroup(abc.ABC):
         pass
 
 
+@lifecycle.base_hook("post_task_expand")
+class BasePostTaskExpand(abc.ABC):
+    @abc.abstractmethod
+    def post_task_expand(
+        self, *, run_id: str, task_id: str, parameters: Dict[str, Any]
+    ):
+        pass
+
+
 @lifecycle.base_hook("post_task_execute")
 class BasePostTaskExecute(abc.ABC):
     @abc.abstractmethod
