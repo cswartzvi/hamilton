@@ -2,7 +2,7 @@
 Drivers
 ========
 
-Currently, we have one `main driver <https://github.com/dagworks-inc/hamilton/blob/main/hamilton/driver.py>`__.
+Currently, we have one `main driver <https://github.com/apache/hamilton/blob/main/hamilton/driver.py>`__.
 It's highly parameterizable, allowing you to customize:
 
 * The way the DAG is executed (how each node is executed), i.e. either locally, in parallel, or on a cluster!
@@ -66,7 +66,7 @@ and instead you provide that input to each ``execute`` invocation.
 Short circuiting some DAG computation
 *************************************
 
-This will force Hamilton to short circuit a particular computation path, and use the passed in override as a result of
+This will force Apache Hamilton to short circuit a particular computation path, and use the passed in override as a result of
 that particular node.
 
 

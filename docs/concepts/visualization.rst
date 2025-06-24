@@ -2,7 +2,7 @@
 Visualization
 =============
 
-After assembling the dataflow, several visualization features become available to the Driver. Hamilton dataflow visualizations are great for documentation because they are directly derived from the code.
+After assembling the dataflow, several visualization features become available to the Driver. Apache Hamilton dataflow visualizations are great for documentation because they are directly derived from the code.
 
 On this page, you'll learn:
 
@@ -164,7 +164,7 @@ Filter nodes to the necessary path:
 Configure your visualization
 ----------------------------
 
-All of the above visualization functions share parameters to customize the visualization (e.g., hide legend, hide inputs). Learn more by reviewing the API reference for `Driver.display_all_functions() <https://hamilton.dagworks.io/en/latest/reference/drivers/Driver/#hamilton.driver.Driver.display_all_functions>`_; parameters should apply to all other visualizations.
+All of the above visualization functions share parameters to customize the visualization (e.g., hide legend, hide inputs). Learn more by reviewing the API reference for `Driver.display_all_functions() <https://hamilton.apache.org/reference/drivers/Driver/#hamilton.driver.Driver.display_all_functions>`_; parameters should apply to all other visualizations.
 
 .. _custom-visualization-style:
 
@@ -193,7 +193,7 @@ This `online graphviz editor <https://edotor.net/>`_ can help you get started!
     ) -> Tuple[dict, Optional[str], Optional[str]]:
         """Custom style function for the visualization.
 
-        :param node: node that Hamilton is styling.
+        :param node: node that Apache Hamilton is styling.
         :param node_class: class used to style the default visualization
         :return: a triple of (style, node_class, legend_name)
         """
@@ -212,4 +212,4 @@ This `online graphviz editor <https://edotor.net/>`_ can help you get started!
     :height: 250px
 
 
-See the `full code example <https://github.com/DAGWorks-Inc/hamilton/tree/main/examples/styling_visualization>`_ for more details.
+See the `full code example <https://github.com/apache/hamilton/tree/main/examples/styling_visualization>`_ for more details.

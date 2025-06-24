@@ -2,7 +2,7 @@ Wrapping the Driver
 ------------------------------
 
 The APIs that the Hamilton Driver is built on, are considered internal. So it is possible for you to define your own
-driver in place of the stock Hamilton driver, we suggest the following path if you don't like how the current Hamilton
+driver in place of the stock Hamilton Driver, we suggest the following path if you don't like how the current Apache Hamilton
 Driver interface is designed:
 
 `Write a "Wrapper" class that delegates to the Hamilton Driver.`

@@ -1,7 +1,7 @@
 # pre-commit hooks
-## Use pre-commit hooks for safer Hamilton code changes
+## Use pre-commit hooks for safer Apache Hamilton code changes
 
-This page gives an introduction to pre-commit hooks and how to use custom hooks to validate your Hamilton code.
+This page gives an introduction to pre-commit hooks and how to use custom hooks to validate your Apache Hamilton code.
 
 ## What are pre-commit hooks?
 A pre-commit hook is a script or command that's executed automatically before making a commit. The goal of these hooks is to standardize code formatting and catch erroneous code before being committed. For example, popular hooks include ensuring files have no syntax errors, sorting imports, and normalizing line breaks.
@@ -50,8 +50,8 @@ The preferred way of working with pre-commit hooks is through the [pre-commit](h
     pre-commit run --all-files
     ```
 
-## Custom Hamilton pre-commit hooks
-pre-commit hooks are great developer tools, but off-the-shelf solutions aren't aware of the Hamilton framework. Hence, we developed a pre-commit hook to help you author Hamilton dataflows! Under the hood, they leverage the `hamilton` CLI, so if you are unfamiliar with it, feel free to install it and view the `--help` messages.
+## Custom Apache Hamilton pre-commit hooks
+pre-commit hooks are great developer tools, but off-the-shelf solutions aren't aware of the Apache Hamilton framework. Hence, we developed a pre-commit hook to help you author Apache Hamilton dataflows! Under the hood, they leverage the `hamilton` CLI, so if you are unfamiliar with it, feel free to install it and view the `--help` messages.
 
 ```console
 pip install sf-hamilton[cli]
@@ -59,7 +59,7 @@ hamilton --help
 ```
 
 ### Checking dataflow definition
-Hamilton doesn't have many syntactic constraints, but there's a few things we want to catch:
+Apache Hamilton doesn't have many syntactic constraints, but there's a few things we want to catch:
 - functions parameters and return are type annotated
 - a node consistently has the same type (e.g., a parameter in multiple functions)
 - functions with a name starting with underscore (`_`) are ignored from the dataflow
@@ -110,7 +110,7 @@ In `v1`, the dataflow could be validated for `C` without any inputs. Now, a deve
 pre-commit hooks can prevent commits from breaking a core path, but you should use unit and integration tests for more robust checks.
 ```
 
-## Add Hamilton pre-commit to your project
+## Add Apache Hamilton pre-commit to your project
 We alluded to the relationship between pre-commit hooks and the `hamilton` command line tool. In fact, the basic hook is designed to take a list of `hamilton` commands and will execute them in order when hooks are triggered.
 
 To use them, add this snippet to your `.pre-commit-config.yaml` and adapt it to your project:
@@ -120,7 +120,7 @@ To use them, add this snippet to your `.pre-commit-config.yaml` and adapt it to 
   rev: v0.1.2  # use a ref >= 0.1.2
   hooks:
   - id: cli-command
-    name: Hamilton CLI command
+    name: Apache Hamilton CLI command
     args: [  # list of CLI commands to execute
       hamilton build my_module.py,
       hamilton build my_module2.py,

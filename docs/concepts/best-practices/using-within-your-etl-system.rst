@@ -2,7 +2,7 @@
 Using within your ETL System
 ============================
 
-Conceptually you can integrate Hamilton within your existing ETL system quite easily:
+Conceptually you can integrate Apache Hamilton within your existing ETL system quite easily:
 
 Compatibility Matrix
 --------------------
@@ -13,11 +13,11 @@ Compatibility Matrix
    * - Framework / Scheduler
      - Compatibility
    * - `Airflow <http://airflow.org>`_
-     - ✅  (see [airflow example](https://github.com/DAGWorks-Inc/hamilton/tree/main/examples/airflow))
+     - ✅  (see [airflow example](https://github.com/apache/hamilton/tree/main/examples/airflow))
    * - `Dagster <https://dagster.io>`_
      - ✅
    * - `Prefect <https://prefect.io>`_
-     - ✅  (see [prefect example](https://github.com/DAGWorks-Inc/hamilton/tree/main/examples/prefect))
+     - ✅  (see [prefect example](https://github.com/apache/hamilton/tree/main/examples/prefect))
    * - `Kubeflow Pipelines <https://www.kubeflow.org/docs/components/pipelines>`_
      - ✅
    * - `CRON <https://en.wikipedia.org/wiki/Cron>`_

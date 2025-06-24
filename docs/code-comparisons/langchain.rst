@@ -3,15 +3,15 @@ LangChain
 ======================
 
 Here we have some code snippets that help compare a vanilla code implementation
-with LangChain and Hamilton.
+with LangChain and Apache Hamilton.
 
 LangChain's focus is on hiding details and making code terse.
 
-Hamilton's focus instead is on making code more readable, maintainable, and importantly customizeable.
+Apache Hamilton's focus instead is on making code more readable, maintainable, and importantly customizeable.
 
 
-So don't be surprised that Hamilton's code is "longer" - that's by design. There is
-also little abstraction between you, and the underlying libraries with Hamilton.
+So don't be surprised that Apache Hamilton's code is "longer" - that's by design. There is
+also little abstraction between you, and the underlying libraries with Apache Hamilton.
 With LangChain they're abstracted away, so you can't really see easily what's going on
 underneath.
 
@@ -25,7 +25,7 @@ A simple joke example
    :align: left
 
    +-----------------------------------------------------------+----------------------------------------------------------+-------------------------------------------------------------+
-   | Hamilton                                                  | Vanilla                                                  | LangChain                                                   |
+   | Apache Hamilton                                           | Vanilla                                                  | LangChain                                                   |
    +===========================================================+==========================================================+=============================================================+
    | .. literalinclude:: langchain_snippets/hamilton_invoke.py | .. literalinclude:: langchain_snippets/vanilla_invoke.py | .. literalinclude:: langchain_snippets/lcel_invoke.py       |
    |                                                           |                                                          |                                                             |
@@ -42,14 +42,14 @@ A simple joke example
 -----------------------
 A streamed joke example
 -----------------------
-With Hamilton we can just swap the call function to return a streamed response.
+With Apache Hamilton we can just swap the call function to return a streamed response.
 Note: you could use @config.when to include both streamed and non-streamed versions in the same DAG.
 
 .. table:: Streamed Version
    :align: left
 
    +-------------------------------------------------------------+------------------------------------------------------------+---------------------------------------------------------------+
-   | Hamilton                                                    | Vanilla                                                    | LangChain                                                     |
+   | Apache Hamilton                                             | Vanilla                                                    | LangChain                                                     |
    +=============================================================+============================================================+===============================================================+
    | .. literalinclude:: langchain_snippets/hamilton_streamed.py | .. literalinclude:: langchain_snippets/vanilla_streamed.py | .. literalinclude:: langchain_snippets/lcel_streamed.py       |
    |                                                             |                                                            |                                                               |
@@ -67,14 +67,14 @@ Note: you could use @config.when to include both streamed and non-streamed versi
 A "batch" parallel joke example
 -------------------------------
 In this batch example, the joke requests are parallelized.
-Note: with Hamilton you can delegate to many different backends for parallelization,
+Note: with Apache Hamilton you can delegate to many different backends for parallelization,
 e.g. Ray, Dask, etc. We use multi-threading here.
 
 .. table:: Batch Parallel Version
    :align: left
 
    +-------------------------------------------------------------+------------------------------------------------------------+---------------------------------------------------------------+
-   | Hamilton                                                    | Vanilla                                                    | LangChain                                                     |
+   | Apache Hamilton                                             | Vanilla                                                    | LangChain                                                     |
    +=============================================================+============================================================+===============================================================+
    | .. literalinclude:: langchain_snippets/hamilton_batch.py    | .. literalinclude:: langchain_snippets/vanilla_batch.py    | .. literalinclude:: langchain_snippets/lcel_batch.py          |
    |                                                             |                                                            |                                                               |
@@ -91,7 +91,7 @@ e.g. Ray, Dask, etc. We use multi-threading here.
 ----------------------
 A "async" joke example
 ----------------------
-Here we show how to make the joke using async constructs. With Hamilton
+Here we show how to make the joke using async constructs. With Apache Hamilton
 you can mix and match async and regular functions, the only change
 is that you need to use the async Hamilton Driver.
 
@@ -99,7 +99,7 @@ is that you need to use the async Hamilton Driver.
    :align: left
 
    +-------------------------------------------------------------+------------------------------------------------------------+---------------------------------------------------------------+
-   | Hamilton                                                    | Vanilla                                                    | LangChain                                                     |
+   | Apache Hamilton                                             | Vanilla                                                    | LangChain                                                     |
    +=============================================================+============================================================+===============================================================+
    | .. literalinclude:: langchain_snippets/hamilton_async.py    | .. literalinclude:: langchain_snippets/vanilla_async.py    | .. literalinclude:: langchain_snippets/lcel_async.py          |
    |                                                             |                                                            |                                                               |
@@ -125,7 +125,7 @@ that uses the different OpenAI model.
    :align: left
 
    +------------------------------------------------------------------+-----------------------------------------------------------------+---------------------------------------------------------------+
-   | Hamilton                                                         | Vanilla                                                         | LangChain                                                     |
+   | Apache Hamilton                                                  | Vanilla                                                         | LangChain                                                     |
    +==================================================================+=================================================================+===============================================================+
    | .. literalinclude:: langchain_snippets/hamilton_completion.py    | .. literalinclude:: langchain_snippets/vanilla_completion.py    | .. literalinclude:: langchain_snippets/lcel_completion.py     |
    |                                                                  |                                                                 |                                                               |
@@ -152,7 +152,7 @@ to use Anthropic.
    :align: left
 
    +------------------------------------------------------------------+-----------------------------------------------------------------+---------------------------------------------------------------+
-   | Hamilton                                                         | Vanilla                                                         | LangChain                                                     |
+   | Apache Hamilton                                                  | Vanilla                                                         | LangChain                                                     |
    +==================================================================+=================================================================+===============================================================+
    | .. literalinclude:: langchain_snippets/hamilton_anthropic.py     | .. literalinclude:: langchain_snippets/vanilla_anthropic.py     | .. literalinclude:: langchain_snippets/lcel_anthropic.py      |
    |                                                                  |                                                                 |                                                               |
@@ -170,7 +170,7 @@ to use Anthropic.
 ---------------------------------
 Logging
 ---------------------------------
-Here we show how to log more information about the joke request. Hamilton has
+Here we show how to log more information about the joke request. Apache Hamilton has
 lots of customization options, and one out of the box is to log more information via
 printing.
 
@@ -178,7 +178,7 @@ printing.
    :align: left
 
    +------------------------------------------------------------------+-----------------------------------------------------------------+---------------------------------------------------------------+
-   | Hamilton                                                         | Vanilla                                                         | LangChain                                                     |
+   | Apache Hamilton                                                  | Vanilla                                                         | LangChain                                                     |
    +==================================================================+=================================================================+===============================================================+
    | .. literalinclude:: langchain_snippets/hamilton_logging.py       | .. literalinclude:: langchain_snippets/vanilla_logging.py       | .. literalinclude:: langchain_snippets/lcel_logging.py        |
    |                                                                  |                                                                 |                                                               |
@@ -197,7 +197,7 @@ opinion it's better to be explicit about it.
    :align: left
 
    +------------------------------------------------------------------+-----------------------------------------------------------------+---------------------------------------------------------------+
-   | Hamilton                                                         | Vanilla                                                         | LangChain                                                     |
+   | Apache Hamilton                                                  | Vanilla                                                         | LangChain                                                     |
    +==================================================================+=================================================================+===============================================================+
    | .. literalinclude:: langchain_snippets/hamilton_fallbacks.py     | .. literalinclude:: langchain_snippets/vanilla_fallbacks.py     | .. literalinclude:: langchain_snippets/lcel_fallbacks.py      |
    |                                                                  |                                                                 |                                                               |

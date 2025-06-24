@@ -1,6 +1,6 @@
 # Jupyter notebooks
 
-There are two main ways to use Hamilton in a notebook.
+There are two main ways to use Apache Hamilton in a notebook.
 
 1. Dynamically create modules within the notebook.
 2. Import modules into the notebook.
@@ -111,7 +111,7 @@ Using a "temporary python module" will not enable scaling of computation by usin
 ## 2 - Importing modules into your notebook
 This tutorial can also be found [published on TDS](https://towardsdatascience.com/how-to-iterate-with-hamilton-in-a-notebook-8ec0f85851ed).
 
-### Step 1 — Install Jupyter & Hamilton <a href="#cb52" id="cb52"></a>
+### Step 1 — Install Jupyter & Apache Hamilton <a href="#cb52" id="cb52"></a>
 
 I assume you already have this step set up. But just in case you don’t:
 
@@ -131,7 +131,7 @@ Then to start the notebook server it should just be:
 
 ### Step 3— The basic process of iteration <a href="#e434" id="e434"></a>
 
-At a high level, you will be switching back and forth between your tabs. You will add functions to your Hamilton function python module, and then import/reimport that module into your notebook to get the changes. From there you will then use Hamilton as usual to run and execute things and the notebook for all the standard things you use notebooks for.
+At a high level, you will be switching back and forth between your tabs. You will add functions to your Hamilton function python module, and then import/reimport that module into your notebook to get the changes. From there you will then use Apache Hamilton as usual to run and execute things and the notebook for all the standard things you use notebooks for.
 
 Let’s walk through an example.
 
@@ -194,7 +194,7 @@ def avg_3wk_spend(spend: pd.Series) -> pd.Series:
 
 Go back to your notebook, and re-run Cell 3 & Cell 4. You should now see a different output printed, e.g. `foo-bar` .
 
-Congratulations! You just managed to iterate on Hamilton using a Jupyter notebook!
+Congratulations! You just managed to iterate on Apache Hamilton using a Jupyter notebook!
 
 **To summarize** this is how things ended up looking on my end:
 
@@ -231,7 +231,7 @@ hamilton_driver.execute(['desired_output1', 'desired_output2'])
 You'd then follow the following process:
 
 1. Write your data transformation in the open python module
-2. In the notebook, instantiate a Hamilton driver and test the DAG with a small subset of data.&#x20;
+2. In the notebook, instantiate a Hamilton Driver and test the DAG with a small subset of data.&#x20;
 3. Because of %autoreload, the module is reimported with the latest changes each time the Hamilton DAG is executed. This approach prevents out-of-order notebook executions, and functions always reside in clean .py files.
 
 Credit: [Thierry Jean's blog post](https://medium.com/@thijean/the-perks-of-creating-dataflows-with-hamilton-36e8c56dd2a).

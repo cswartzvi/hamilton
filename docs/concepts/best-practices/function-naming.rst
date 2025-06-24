@@ -4,15 +4,15 @@ Function Naming
 
 Here are three important points about function naming:
 
-#. It enables you to define your Hamilton dataflow.
+#. It enables you to define your Apache Hamilton dataflow.
 #. It drives collaboration & code reuse.
 #. It serves as documentation itself.
 
-You don't need to get this right the first time -- search and replace is really easy with Hamilton code bases -- but it
+You don't need to get this right the first time -- search and replace is really easy with Apache Hamilton code bases -- but it
 is something to converge thinking on!
 
-It enables you to define your Hamilton dataflow
------------------------------------------------
+It enables you to define your Apache Hamilton dataflow
+------------------------------------------------------
 
 As the name of a hamilton function defines the name of the created artifact, naming is vital to a readable, extensible
 hamilton codebase.  Names must mean something:
@@ -24,7 +24,7 @@ hamilton codebase.  Names must mean something:
         ...
 
 In this case, ``foo_bar`` is not helpful - it's unclear what this function produces at all. Remember you want function
-names to mean something, since that will enable clarity when using Hamilton, what is being requested, and will help
+names to mean something, since that will enable clarity when using Apache Hamilton, what is being requested, and will help
 document what the function itself is doing.
 
 It drives collaboration and reuse
