@@ -41,13 +41,79 @@ dask-dataframe = ["dask[dataframe]"]
 dask-diagnostics = ["dask[diagnostics]"]
 dask-distributed = ["dask[distributed]"]
 datadog = ["ddtrace<3.0"]  # Temporary pin until h_ddog.py import is fixed for >3.0 version
+diskcache = ["diskcache"]
+experiments = [
+  "fastapi",
+  "fastui",
+  "uvicorn",
+]
+lsp = ["sf-hamilton-lsp"]
+openlineage = ["openlineage-python"]
+pandera = ["pandera"]
+pydantic = ["pydantic>=2.0"]
+pyspark = [
+  # we have to run these dependencies because Spark does not check to ensure the right target was called
+  "pyspark[pandas_on_spark,sql]",
+]
+ray = ["ray>=2.0.0", "pyarrow"]
+rich = ["rich"]
+sdk = ["sf-hamilton-sdk"]
+slack = ["slack-sdk"]
+
+tqdm = ["tqdm"]
+ui = ["sf-hamilton-ui"]
+
+# vaex -- on >=py3.11 only core part available https://github.com/vaexio/vaex/pull/2331#issuecomment-2437198176
+vaex = [
+  "vaex; python_version <= '3.10'"
+  ]
+visualization = ["graphviz", "networkx"]
+
+[dependency-groups]
 dev = [
   "pre-commit",
   "ruff==0.5.7", # this should match `.pre-commit-config.yaml`
 ]
-diskcache = ["diskcache"]
+test = [
+  "connectorx<=0.3.2; python_version=='3.8'",
+  "connectorx; python_version!='3.8'",
+  "dask[complete]",
+  "dask-expr>=1.1.14; python_version >= '3.10'", # Bugfix only available after py3.10 https://github.com/dask/dask-expr/pull/1150
+  "datasets>=2.18.0", # huggingface datasets -- https://github.com/huggingface/datasets/issues/6737#issuecomment-2107336816
+  "diskcache",
+  "dlt",
+  "fsspec",
+  "graphviz",
+  "kaleido",
+  "kedro",
+  "lancedb",
+  "lightgbm",
+  "lxml",
+  "lz4",
+  "matplotlib",
+  "mlflow",
+  "networkx",
+  "openpyxl", # for excel data loader
+  "pandera[dask]",
+  "plotly",
+  "polars",
+  "pyarrow",
+  "pydantic >=2.0",
+  "pyreadstat", # for SPSS data loader
+  "pytest",
+  "pytest-asyncio",
+  "pytest-cov",
+  "PyYAML",
+  "scikit-learn",
+  "sqlalchemy==1.4.49; python_version == '3.7.*'",
+  "sqlalchemy; python_version >= '3.8'",
+  "typer",
+  "xgboost",
+  "xlsx2csv", # for excel data loader
+  "xlsxwriter",  # Excel export requires 'xlsxwriter'
+]
 docs = [
-  "sf-hamilton[dev]",
+  {include-group = "dev"},
   "alabaster>=0.7,<0.8,!=0.7.5", # read the docs pins
   "commonmark==0.9.1", # read the docs pins
   "dask-expr>=1.1.14; python_version >= '3.10'", # Bugfix only available after py3.10 https://github.com/dask/dask-expr/pull/1150
@@ -89,72 +155,6 @@ docs = [
   "tqdm",
   "xgboost",
 ]
-experiments = [
-  "fastapi",
-  "fastui",
-  "uvicorn",
-]
-lsp = ["sf-hamilton-lsp"]
-openlineage = ["openlineage-python"]
-packaging = [
-  "build",
-]
-pandera = ["pandera"]
-pydantic = ["pydantic>=2.0"]
-pyspark = [
-  # we have to run these dependencies because Spark does not check to ensure the right target was called
-  "pyspark[pandas_on_spark,sql]",
-]
-ray = ["ray>=2.0.0", "pyarrow"]
-rich = ["rich"]
-sdk = ["sf-hamilton-sdk"]
-slack = ["slack-sdk"]
-test = [
-  "connectorx<=0.3.2; python_version=='3.8'",
-  "connectorx; python_version!='3.8'",
-  "dask[complete]",
-  "dask-expr>=1.1.14; python_version >= '3.10'", # Bugfix only available after py3.10 https://github.com/dask/dask-expr/pull/1150
-  "datasets>=2.18.0", # huggingface datasets -- https://github.com/huggingface/datasets/issues/6737#issuecomment-2107336816
-  "diskcache",
-  "dlt",
-  "fsspec",
-  "graphviz",
-  "kaleido",
-  "kedro",
-  "lancedb",
-  "lightgbm",
-  "lxml",
-  "lz4",
-  "matplotlib",
-  "mlflow",
-  "networkx",
-  "openpyxl", # for excel data loader
-  "pandera[dask]",
-  "plotly",
-  "polars",
-  "pyarrow",
-  "pydantic >=2.0",
-  "pyreadstat", # for SPSS data loader
-  "pytest",
-  "pytest-asyncio",
-  "pytest-cov",
-  "PyYAML",
-  "scikit-learn",
-  "sqlalchemy==1.4.49; python_version == '3.7.*'",
-  "sqlalchemy; python_version >= '3.8'",
-  "typer",
-  "xgboost",
-  "xlsx2csv", # for excel data loader
-  "xlsxwriter",  # Excel export requires 'xlsxwriter'
-]
-tqdm = ["tqdm"]
-ui = ["sf-hamilton-ui"]
-
-# vaex -- on >=py3.11 only core part available https://github.com/vaexio/vaex/pull/2331#issuecomment-2437198176
-vaex = [
-  "vaex; python_version <= '3.10'"
-  ]
-visualization = ["graphviz", "networkx"]
 
 [project.entry-points.console_scripts]
 h_experiments = "hamilton.plugins.h_experiments.__main__:main"
