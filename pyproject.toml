@@ -7,7 +7,7 @@ name = "sf-hamilton"
 dynamic = ["version"]
 description = "Hamilton, the micro-framework for creating dataframes."
 readme = "README.md"
-requires-python = ">=3.8, <4"
+requires-python = ">=3.8.1, <4"
 license = {text = "Apache-2.0"}
 keywords = ["hamilton"]
 authors = [
