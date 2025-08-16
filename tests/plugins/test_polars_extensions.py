@@ -201,5 +201,6 @@ def test_polars_spreadsheet(df: pl.DataFrame, tmp_path: pathlib.Path) -> None:
 
 def test_getting_type_hints_spreadsheetwriter():
     """Tests that types can be resolved at run time."""
-    type_hints = typing.get_type_hints(PolarsSpreadsheetWriter)
+    from polars.selectors import Selector
+    type_hints = typing.get_type_hints(PolarsSpreadsheetWriter, localns={"Selector": Selector})
     assert type_hints["workbook"] == typing.Union[Workbook, io.BytesIO, pathlib.Path, str]
