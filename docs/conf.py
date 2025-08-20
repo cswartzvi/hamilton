@@ -76,6 +76,12 @@ nb_mime_priority_overrides = [
     ["simplepdf", "text/plain", 100],
 ]
 
+exclude_patterns = [
+    '_build',
+    'Thumbs.db',
+    '.DS_Store',
+    'README.md',
+]
 
 # for the sitemap extension ---
 # check if the current commit is tagged as a release (vX.Y.Z) and set the version
