@@ -50,7 +50,7 @@ jobs:
 
         - name: Install libiconv on Linux
           if: runner.os == 'Linux'
-          run: sudo apt-get update && sudo apt-get install -y build-essential libc6-dev libiconv-hook-dev zlib1g-dev
+          run: sudo apt-get update && sudo apt-get install -y build-essential libc6-dev libiconv-dev zlib1g-dev
 
         - name: Checkout repository
           uses: actions/checkout@v4
