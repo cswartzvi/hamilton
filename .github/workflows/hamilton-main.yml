@@ -63,13 +63,13 @@ jobs:
         - name: Check linting with pre-commit
           if: ${{ runner.os == 'Linux' }}
           run: |
-            uv sync --extra dev
+            uv sync --dev
             uv run pre-commit install
             uv run pre-commit run --all-files
 
         - name: Test hamilton main package
           run: |
-            uv sync --extra test
+            uv sync --group test
             uv pip install "kaleido<0.4.0"
             uv run pytest tests/ --cov=hamilton --ignore tests/integrations
 
@@ -77,7 +77,7 @@ jobs:
         - name: Test integrations
           if: ${{ matrix.python-version == '3.9' }}
           run: |
-            uv sync --extra test --extra pandera
+            uv sync --group test --extra pandera
             uv pip install -r tests/integrations/pandera/requirements.txt
             uv pip install dask-expr
             uv run pytest tests/integrations
@@ -85,24 +85,24 @@ jobs:
         - name: Test integrations
           if: ${{ matrix.python-version != '3.9' }}
           run: |
-            uv sync --extra test --extra pandera
+            uv sync --group test --extra pandera
             uv pip install -r tests/integrations/pandera/requirements.txt
             uv run pytest tests/integrations
 
         - name: Test pandas
           run: |
-            uv sync --extra test
+            uv sync --group test
             uv run pytest plugin_tests/h_pandas
 
         - name: Test polars
           run: |
-            uv sync --extra test
+            uv sync --group test
             uv pip install polars
             uv run pytest plugin_tests/h_polars
 
         - name: Test narwhals
           run: |
-            uv sync --extra test
+            uv sync --group test
             uv pip install polars pandas narwhals
             uv run pytest plugin_tests/h_narwhals
 
@@ -110,7 +110,7 @@ jobs:
           # Dask supports >= py3.9
           if: ${{ matrix.python-version != '3.8' }}
           run: |
-            uv sync --extra test --extra dask
+            uv sync --group test --extra dask
             uv run pytest plugin_tests/h_dask
 
         - name: Test ray
@@ -119,7 +119,7 @@ jobs:
           env:
             RAY_ENABLE_UV_RUN_RUNTIME_ENV: 0 # https://github.com/ray-project/ray/issues/53848
           run: |
-            uv sync --extra test --extra ray
+            uv sync --group test --extra ray
             uv run pytest plugin_tests/h_ray
 
         - name: Test pyspark
@@ -129,7 +129,7 @@ jobs:
             PYSPARK_SUBMIT_ARGS: "--conf spark.sql.ansi.enabled=false pyspark-shell"
           run: |
             sudo apt-get install --no-install-recommends --yes default-jre
-            uv sync --extra test --extra pyspark
+            uv sync --group test --extra pyspark
             uv pip install 'numpy<2' 'pyspark[connect]' 'grpcio'
             uv pip install --no-cache --reinstall --strict 'grpcio-status >= 1.48.1'
             uv run pytest plugin_tests/h_spark
@@ -140,7 +140,7 @@ jobs:
           env:
             PYSPARK_SUBMIT_ARGS: "--conf spark.sql.ansi.enabled=false pyspark-shell"
           run: |
-            uv sync --extra test --extra pyspark
+            uv sync --group test --extra pyspark
             uv pip install 'numpy<2' 'pyspark[connect]' 'grpcio'
             uv pip install --no-cache --reinstall --strict 'grpcio-status >= 1.48.1'
             uv run pytest plugin_tests/h_spark
@@ -150,7 +150,7 @@ jobs:
           if: ${{ runner.os == 'Linux' && (matrix.python-version == '3.8' || matrix.python-version == '3.9' || matrix.python-version == '3.10') }}
           run: |
             sudo apt-get install --no-install-recommends --yes libpcre3-dev cargo
-            uv sync --extra test --extra vaex
+            uv sync --group test --extra vaex
             uv pip install "numpy<2"
             uv run pytest plugin_tests/h_vaex
 
@@ -158,6 +158,6 @@ jobs:
           # Vaex supports <= py3.10 and numpy<2
           if: ${{ runner.os != 'Linux' && (matrix.python-version == '3.8' || matrix.python-version == '3.9' || matrix.python-version == '3.10') }}
           run: |
-            uv sync --extra test --extra vaex
+            uv sync --group test --extra vaex
             uv pip install "numpy<2"
             uv run pytest plugin_tests/h_vaex

@@ -167,8 +167,8 @@ Note: since it is common to have pyenv installed too -- conda and pyenv don't pl
 `conda config --set auto_activate_base False` to not set conda to be active by default.
 3. Make sure you have an Anaconda account and are authorized to push to anaconda.
 4. Log in to anaconda (e.g. conda activate && anaconda login).
-5. We have a script `build_conda.sh` that is a bash script that encapsulates the steps. For reference
+5. We have a script `scripts/build_conda.sh` that is a bash script that encapsulates the steps. For reference
 it roughly follows [this documentation](https://conda.io/projects/conda-build/en/latest/user-guide/tutorials/build-pkgs-skeleton.html).
-Run it with `bash build_conda.sh`. It should "just work".
+Run it with `bash scripts/build_conda.sh`. It should "just work".
 6. Be sure to remove any files it creates afterwards so when you come to do a release again, you're not uploading the
 same files.
