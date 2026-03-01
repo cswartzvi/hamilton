@@ -17,6 +17,7 @@
 
 import logging
 import pprint
+from collections import deque
 from collections.abc import Collection
 from functools import partial
 from typing import Any
@@ -65,12 +66,12 @@ def topologically_sort_nodes(nodes: list[node.Node]) -> list[node.Node]:
     in_degrees = {node_.name: len(dependency_map.get(node_.name, [])) for node_ in nodes}
     # TODO -- determine what happens if nodes have dependencies that aren't present
     sources = [node_ for node_ in nodes if in_degrees[node_.name] == 0]
-    queue = []
+    queue = deque()
     for source in sources:
         queue.append(source)
     sorted_nodes = []
     while len(queue) > 0:
-        node_ = queue.pop(0)
+        node_ = queue.popleft()
         sorted_nodes.append(node_)
         for next_node in depended_on_by_map.get(node_.name, []):
             if next_node.name in in_degrees:
