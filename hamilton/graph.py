@@ -1091,13 +1091,19 @@ class FunctionGraph:
         nodes = set()
         user_nodes = set()
 
-        def dfs_traverse(node: node.Node):
-            nodes.add(node)
-            for n in next_nodes_fn(node):
-                if n not in nodes:
-                    dfs_traverse(n)
-            if node.user_defined:
-                user_nodes.add(node)
+        def dfs_traverse_iterative(start_node: node.Node):
+            """Iterative DFS to avoid recursion depth limits with large DAGs."""
+            stack = [start_node]
+            nodes.add(start_node)
+            while stack:
+                n = stack.pop()
+                if n.user_defined:
+                    user_nodes.add(n)
+                # reversed() preserves the same traversal order as the recursive version
+                for next_n in reversed(next_nodes_fn(n)):
+                    if next_n not in nodes:
+                        nodes.add(next_n)
+                        stack.append(next_n)
 
         missing_vars = []
         for var in starting_nodes:
@@ -1108,7 +1114,7 @@ class FunctionGraph:
                     # if it's not in the runtime inputs, it's a properly missing variable
                     missing_vars.append(var)
                 continue  # collect all missing final variables
-            dfs_traverse(self.nodes[var])
+            dfs_traverse_iterative(self.nodes[var])
         if missing_vars:
             missing_vars_str = ",\n".join(missing_vars)
             raise ValueError(f"Unknown nodes [{missing_vars_str}] requested. Check for typos?")
